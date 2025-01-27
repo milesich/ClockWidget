@@ -1,0 +1,134 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/layout_header">
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/time_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="time_show"
+            app:title="@string/show_title"
+            app:icon="@drawable/ic_clock" />
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/font_list"
+            app:entryValues="@array/font_list_values"
+            app:key="time_font"
+            app:title="@string/font_title"
+            app:icon="@drawable/ic_font"
+            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            app:defaultValue="42"
+            app:icon="@drawable/ic_size"
+            app:key="time_size"
+            android:min="10"
+            android:max="100"
+            app:title="@string/size_title" />
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            app:defaultValue="?attr/colorOnSurface"
+            app:key="time_color"
+            app:title="@string/color_title"
+            app:cpv_showAlphaSlider="false"
+            app:icon="@drawable/ic_colorize" />
+        <ListPreference
+            app:defaultValue="17"
+            app:entries="@array/text_align_keys"
+            app:entryValues="@array/text_align_values"
+            app:key="time_align"
+            app:title="@string/align_title"
+            app:icon="@drawable/ic_align"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:defaultValue="k:mm"
+            android:dialogMessage="@string/time_format_dialog_msg"
+            app:icon="@drawable/ic_text"
+            app:key="time_format"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            app:title="@string/format_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/date_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="date_show"
+            app:title="@string/show_title"
+            app:icon="@drawable/ic_calendar" />
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/font_list"
+            app:entryValues="@array/font_list_values"
+            app:key="date_font"
+            app:title="@string/font_title"
+            app:icon="@drawable/ic_font"
+            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            app:defaultValue="22"
+            app:key="date_size"
+            android:min="10"
+            android:max="100"
+            app:title="@string/size_title"
+            app:icon="@drawable/ic_size" />
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            app:defaultValue="?attr/colorOnSurface"
+            app:key="date_color"
+            app:title="@string/color_title"
+            app:cpv_showAlphaSlider="false"
+            app:icon="@drawable/ic_colorize" />
+        <ListPreference
+            app:defaultValue="17"
+            app:entries="@array/text_align_keys"
+            app:entryValues="@array/text_align_values"
+            app:key="date_align"
+            app:title="@string/align_title"
+            app:icon="@drawable/ic_align"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:defaultValue="EEE, MMM d"
+            android:dialogMessage="@string/date_format_dialog_msg"
+            app:icon="@drawable/ic_text"
+            app:key="date_format"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            app:title="@string/format_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/alarm_header">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="alarm_show"
+            app:title="@string/show_title"
+            app:icon="@drawable/ic_alarm" />
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/font_list"
+            app:entryValues="@array/font_list_values"
+            app:key="alarm_font"
+            app:title="@string/font_title"
+            app:icon="@drawable/ic_font"
+            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            app:defaultValue="22"
+            app:key="alarm_size"
+            android:min="10"
+            android:max="100"
+            app:title="@string/size_title"
+            app:icon="@drawable/ic_size" />
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            app:defaultValue="?attr/colorOnSurface"
+            app:key="alarm_color"
+            app:title="@string/color_title"
+            app:cpv_showAlphaSlider="false"
+            app:icon="@drawable/ic_colorize" />
+        <ListPreference
+            app:defaultValue="17"
+            app:entries="@array/text_align_keys"
+            app:entryValues="@array/text_align_values"
+            app:key="alarm_align"
+            app:title="@string/align_title"
+            app:icon="@drawable/ic_align"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

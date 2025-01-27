@@ -1,0 +1,48 @@
+<resources>
+    <string-array name="font_list">
+        <item>System font</item>
+        <item>Warnes</item>
+        <item>Lato regular</item>
+        <item>Lato light</item>
+        <item>Lato thin</item>
+        <item>Arizonia</item>
+        <item>Rubik light</item>
+        <item>Imprima</item>
+        <item>Noto sans</item>
+        <item>Jolly lodger</item>
+        <item>Archivo black</item>
+        <item>Bungee shade</item>
+        <item>Coda</item>
+        <item>Ubuntu light</item>
+        <item>Handlee</item>
+    </string-array>
+
+    <string-array name="font_list_values">
+        <item>default</item>
+        <item>warnes</item>
+        <item>lato</item>
+        <item>lato_light</item>
+        <item>lato_thin</item>
+        <item>arizonia</item>
+        <item>rubik_light</item>
+        <item>imprima</item>
+        <item>noto_sans</item>
+        <item>jolly_lodger</item>
+        <item>archivo_black</item>
+        <item>bungee_shade</item>
+        <item>coda</item>
+        <item>ubuntu_light</item>
+        <item>handlee</item>
+    </string-array>
+
+    <string-array name="text_align_keys">
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+    </string-array>
+    <string-array name="text_align_values">
+        <item>3</item>
+        <item>17</item>
+        <item>5</item>
+    </string-array>
+</resources>
