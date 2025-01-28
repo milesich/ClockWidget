@@ -4,14 +4,13 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Typeface
 import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.RemoteViews
-import androidx.core.content.res.ResourcesCompat
 
 object Default {
     object Time {
@@ -29,7 +28,7 @@ object Default {
         const val SIZE = 22
         const val ALIGN = Gravity.CENTER.toString()
         var COLOR = Color.WHITE
-        var FORMAT = "EEE, MMM d"
+        var FORMAT = "EEEE, MMM d"
     }
 
     object Alarm {
@@ -38,6 +37,7 @@ object Default {
         const val SIZE = 22
         const val ALIGN = Gravity.CENTER.toString()
         var COLOR = Color.WHITE
+        var FORMAT = "E HH:mm"
     }
 }
 
@@ -47,6 +47,7 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
     init {
         if (!DateFormat.is24HourFormat(context)) {
             Default.Time.FORMAT = "h:mm"
+            Default.Alarm.FORMAT = "E hh:mm a"
         }
     }
 
@@ -72,6 +73,7 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
         var alarmSize: Int = Default.Alarm.SIZE
         var alarmColor: Int = Default.Alarm.COLOR
         var alarmAlign: String = Default.Alarm.ALIGN
+        var alarmFormat: String = Default.Alarm.FORMAT
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences, key: String?) {
@@ -94,17 +96,17 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
         alarmSize = sp.getInt(Pref.Alarm.SIZE, Default.Alarm.SIZE)
         alarmColor = sp.getInt(Pref.Alarm.COLOR, Default.Alarm.COLOR)
         alarmAlign = sp.getString(Pref.Alarm.ALIGN, Default.Alarm.ALIGN)!!
+        alarmFormat = sp.getString(Pref.Alarm.FORMAT, Default.Alarm.FORMAT)!!
 
         updater.updateWidget()
     }
 
     fun createWidgetRemoteView(): RemoteViews {
         val views = RemoteViews(context.packageName, layoutResource)
-        val alarmText = nextAlarmText
 
         views.setViewVisibility(R.id.time, View.GONE)
         views.setViewVisibility(R.id.date, View.GONE)
-        views.setViewVisibility(R.id.alarm, View.GONE)
+        views.setViewVisibility(R.id.alarmView, View.GONE)
 
         if (timeShow) {
             views.setViewVisibility(R.id.time, View.VISIBLE)
@@ -121,14 +123,29 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
             views.setCharSequence(R.id.date, "setFormat12Hour", dateFormat)
             views.setTextViewTextSize(R.id.date, TypedValue.COMPLEX_UNIT_SP, dateSize.toFloat())
             views.setTextColor(R.id.date, dateColor)
+            views.setInt(R.id.dateAlarmView, "setGravity", dateAlign.toInt())
         }
 
-        if (alarmShow && alarmText.isNotEmpty()) {
-            views.setViewVisibility(R.id.alarm, View.VISIBLE)
-            views.setTextViewTextSize(R.id.alarm, TypedValue.COMPLEX_UNIT_SP, alarmSize.toFloat())
-            views.setTextColor(R.id.alarm, alarmColor)
-            //views.setColorStateList(R.id.alarm, "setCompoundDrawableTintList", alarmColor)
-            views.setTextViewText(R.id.alarm, alarmText)
+        if (alarmShow) {
+            val alarmText = nextAlarmText
+            if (alarmText.isNotEmpty()) {
+                val csl = ColorStateList.valueOf(alarmColor)
+                views.setViewVisibility(R.id.alarmView, View.VISIBLE)
+                views.setTextViewTextSize(
+                    R.id.alarm,
+                    TypedValue.COMPLEX_UNIT_SP,
+                    alarmSize.toFloat()
+                )
+                views.setTextColor(R.id.alarm, alarmColor)
+                views.setColorStateList(R.id.alarmIcon, "setImageTintList", csl)
+                views.setTextViewText(R.id.alarm, alarmText)
+                views.setViewLayoutWidth(
+                    R.id.alarmIcon,
+                    alarmSize.toFloat(),
+                    TypedValue.COMPLEX_UNIT_SP
+                )
+                views.setInt(R.id.dateAlarmView, "setGravity", alarmAlign.toInt())
+            }
         }
 
         return views
@@ -143,13 +160,6 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
         get() {
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val aci = am.nextAlarmClock ?: return ""
-
-            var fmt = "E h:mm a"
-            if (DateFormat.is24HourFormat(this.context)) {
-                fmt = "E H:mm"
-            }
-
-            return DateFormat.format(fmt, aci.triggerTime) as String
+            return DateFormat.format(alarmFormat, aci.triggerTime) as String
         }
-
 }

@@ -11,20 +11,23 @@
     <include layout="@layout/time"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/dateAlarmView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <include layout="@layout/date"
+        <include
+            layout="@layout/date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="5dp"/>
+            android:layout_marginHorizontal="5dp" />
 
-        <include layout="@layout/alarm"
+        <include
+            layout="@layout/alarm"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="5dp"/>
+            android:layout_marginHorizontal="5dp" />
     </LinearLayout>
 
 </LinearLayout>

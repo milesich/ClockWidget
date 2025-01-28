@@ -16,6 +16,7 @@
     <string name="align_title">Align</string>
     <string name="format_title">Format</string>
 
-    <string name="time_format_dialog_msg">H – Hour in day (0–23)\nk – Hour in day (1–24)\nK – Hour in am/pm (0–11) \nh - Hour in am/pm (1-12)\nm - Minute\ns - Second\na - Am/pm marker</string>
-    <string name="date_format_dialog_msg">y - Year\nM - Month\nd - Day in month\nD - Day in year\nE - Day name in week\nw - Week in year\nW - Week in month</string>
+    <string name="time_format_dialog_msg">Hour: \u0020 H (0-23) \u0020 HH (00-23)\nHour: \u0020 h (1-12) \u0020 hh (01-12)\nMinute: m (0-59) \u0020 mm (00-59)\nSecond: s (0-59) \u0020 ss (00-59)\nam/pm:\u0020 a (AM-PM)\n\nH:mm \u0020 = 1:01\nHH:mm\u0020 = 01:01\nh:mm a = 1:01 AM</string>
+    <string name="date_format_dialog_msg">Year:\u0020 yy\u0020 (24) \u0020 yyyy (2024)\nMonth: MMM (Jan)\u0020 MMMM (January)\nDay: \u0020 d \u0020 (1)\u0020 \u0020 dd \u0020 (01)\nW day: E \u0020 (Tue)\u0020 EEEE (Tuesday)\n\nEEEE, MMM d = Tuesday, Jan 5</string>
+    <string name="alarm_format_dialog_msg">Year:\u0020 yy\u0020 (24) \u0020 yyyy (2024)\nMonth: MMM (Jan)\u0020 MMMM (January)\nDay: \u0020 d \u0020 (1)\u0020 \u0020 dd \u0020 (01)\nW day: E \u0020 (Tue)\u0020 EEEE (Tuesday)\n\nHour: \u0020 H (0-23) \u0020 HH (00-23)\nHour: \u0020 h (1-12) \u0020 hh (01-12)\nMinute: m (0-59) \u0020 mm (00-59)\nSecond: s (0-59) \u0020 ss (00-59)\nam/pm:\u0020 a (AM-PM)\n\nE HH:mm = Tue 08:30</string>
 </resources>

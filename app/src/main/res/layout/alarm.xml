@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/alarm"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/alarmView"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:drawableLeft="@drawable/ic_alarm_w"
-    android:drawablePadding="5dp"
-    android:singleLine="true"
-    android:text="Fun 6:00" />
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/alarmIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_alarm_w" />
+
+    <android.widget.TextView
+        android:id="@+id/alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:singleLine="true"
+        android:text="Fun 6:00" />
+
+</LinearLayout>

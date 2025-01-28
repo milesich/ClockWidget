@@ -37,6 +37,7 @@ object Pref {
         const val SIZE = "alarm_size"
         const val COLOR = "alarm_color"
         const val ALIGN = "alarm_align"
+        const val FORMAT = "alarm_format"
     }
 }
 
@@ -147,6 +148,7 @@ class SettingsActivity : AppCompatActivity(), WidgetUpdater {
             findPreference<Preference>(Pref.Alarm.SIZE)?.onPreferenceChangeListener = listener
             findPreference<Preference>(Pref.Alarm.COLOR)?.onPreferenceChangeListener = listener
             findPreference<Preference>(Pref.Alarm.ALIGN)?.onPreferenceChangeListener = listener
+            findPreference<Preference>(Pref.Alarm.FORMAT)?.onPreferenceChangeListener = listener
         }
 
         private var listener: Preference.OnPreferenceChangeListener =
@@ -173,6 +175,7 @@ class SettingsActivity : AppCompatActivity(), WidgetUpdater {
                     Pref.Alarm.SIZE -> e.putInt(Pref.Alarm.SIZE, nv as Int)
                     Pref.Alarm.COLOR -> e.putInt(Pref.Alarm.COLOR, nv as Int)
                     Pref.Alarm.ALIGN -> e.putString(Pref.Alarm.ALIGN, nv as String)
+                    Pref.Alarm.FORMAT -> e.putString(Pref.Alarm.FORMAT, nv as String)
                 }
 
                 e.apply()
