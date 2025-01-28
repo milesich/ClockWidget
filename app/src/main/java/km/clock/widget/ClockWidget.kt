@@ -2,11 +2,10 @@ package km.clock.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.util.Log
-import androidx.preference.PreferenceManager
 
 /**
  * Implementation of App Widget functionality.
@@ -19,30 +18,32 @@ class ClockWidget : AppWidgetProvider(), WidgetUpdater {
         super.onReceive(context, intent)
         val action = intent.action
         if (action != null && action == "android.app.action.NEXT_ALARM_CLOCK_CHANGED") {
-            Log.d("CWP", action)
+            Log.d("ClockWidget", action)
         }
     }
 
     override fun onUpdate(
         context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray
     ) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        for (appWidgetId in appWidgetIds) {
+            redrawWidgetFromData(context, appWidgetManager, appWidgetId)
+        }
+    }
 
-        // Get all ids
-        val thisWidget = ComponentName(context, ClockWidget::class.java)
-
-        val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
-        for (widgetId in allWidgetIds) {
-            redrawWidgetFromData(context, appWidgetManager, widgetId)
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        // When the user deletes the widget, delete the preference associated with it.
+        for (appWidgetId in appWidgetIds) {
+            val sp = context.getSharedPreferences(appWidgetId.toString(), MODE_PRIVATE)
+            sp.edit().clear().apply()
         }
     }
 
     private fun redrawWidgetFromData(
         context: Context, appWidgetManager: AppWidgetManager, widgetId: Int
     ) {
+        val sp = context.getSharedPreferences(widgetId.toString(), MODE_PRIVATE)
         widgetViewCreator = WidgetViewCreator(context, this)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        widgetViewCreator!!.onSharedPreferenceChanged(sharedPreferences, "")
+        widgetViewCreator!!.onSharedPreferenceChanged(sp, "")
         val views = widgetViewCreator!!.createWidgetRemoteView()
         appWidgetManager.updateAppWidget(widgetId, views)
     }

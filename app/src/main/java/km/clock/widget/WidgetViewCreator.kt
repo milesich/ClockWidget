@@ -11,6 +11,8 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.RemoteViews
+import com.google.android.material.color.MaterialColors
+
 
 object Default {
     object Time {
@@ -49,11 +51,19 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
             Default.Time.FORMAT = "h:mm"
             Default.Alarm.FORMAT = "E hh:mm a"
         }
+
+        val color = MaterialColors.getColor(
+            context,
+            com.google.android.material.R.attr.colorOnSurface,
+            Color.WHITE
+        )
+
+        Default.Time.COLOR = color
+        Default.Date.COLOR = color
+        Default.Alarm.COLOR = color
     }
 
     companion object {
-        private const val TAG = "WidgetViewCreator"
-
         var timeShow: Boolean = Default.Time.SHOW
         var timeFont: String = Default.Time.FONT
         var timeSize: Int = Default.Time.SIZE

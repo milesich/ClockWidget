@@ -8,9 +8,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
+import androidx.core.os.bundleOf
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 
 object Pref {
     object Time {
@@ -41,28 +41,17 @@ object Pref {
     }
 }
 
-class SettingsActivity : AppCompatActivity(), WidgetUpdater {
+class SettingsActivity : AppCompatActivity(R.layout.settings_activity), WidgetUpdater {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private var preview: FrameLayout? = null
     private var widgetViewCreator: WidgetViewCreator? = null
 
-    // static members
     companion object {
         const val TAG: String = "SettingsActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
-                .commit()
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        preview = findViewById(R.id.preview)
-        widgetViewCreator = WidgetViewCreator(this, this)
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
@@ -74,28 +63,42 @@ class SettingsActivity : AppCompatActivity(), WidgetUpdater {
             AppWidgetManager.INVALID_APPWIDGET_ID
         ) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
+        Log.d(TAG, "appWidgetId = $appWidgetId")
+
         // If this activity was started with an intent without an app widget ID, finish with an error.
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
             return
         }
 
-        updateWidget()
+        preview = findViewById(R.id.preview)
+
+        if (savedInstanceState == null) {
+            val bundle = bundleOf("appWidgetId" to appWidgetId)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<SettingsFragment>(R.id.settings, args = bundle)
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume")
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        Log.d(TAG, "onResume $appWidgetId")
+
+        widgetViewCreator = WidgetViewCreator(this, this)
+        val sp = getSharedPreferences(appWidgetId.toString(), MODE_PRIVATE)
         sp.registerOnSharedPreferenceChangeListener(widgetViewCreator)
         widgetViewCreator!!.onSharedPreferenceChanged(sp, "")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "onPause")
-        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        Log.d(TAG, "onPause $appWidgetId")
+
+        val sp = getSharedPreferences(appWidgetId.toString(), MODE_PRIVATE)
         sp.unregisterOnSharedPreferenceChangeListener(widgetViewCreator)
+        widgetViewCreator = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -124,63 +127,4 @@ class SettingsActivity : AppCompatActivity(), WidgetUpdater {
         val previewView = views.apply(this, preview)
         preview!!.addView(previewView)
     }
-
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
-
-            findPreference<Preference>(Pref.Time.SHOW)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Time.FONT)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Time.SIZE)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Time.COLOR)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Time.ALIGN)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Time.FORMAT)?.onPreferenceChangeListener = listener
-
-            findPreference<Preference>(Pref.Date.SHOW)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Date.FONT)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Date.SIZE)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Date.COLOR)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Date.ALIGN)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Date.FORMAT)?.onPreferenceChangeListener = listener
-
-            findPreference<Preference>(Pref.Alarm.SHOW)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Alarm.FONT)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Alarm.SIZE)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Alarm.COLOR)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Alarm.ALIGN)?.onPreferenceChangeListener = listener
-            findPreference<Preference>(Pref.Alarm.FORMAT)?.onPreferenceChangeListener = listener
-        }
-
-        private var listener: Preference.OnPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, nv ->
-                val e = PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
-
-                Log.d(TAG, "${preference.key} = $nv")
-
-                when (preference.key) {
-                    Pref.Time.SHOW -> e.putBoolean(Pref.Time.SHOW, nv as Boolean)
-                    Pref.Time.FONT -> e.putString(Pref.Time.FONT, nv as String)
-                    Pref.Time.SIZE -> e.putInt(Pref.Time.SIZE, nv as Int)
-                    Pref.Time.COLOR -> e.putInt(Pref.Time.COLOR, nv as Int)
-                    Pref.Time.ALIGN -> e.putString(Pref.Time.ALIGN, nv as String)
-                    Pref.Time.FORMAT -> e.putString(Pref.Time.FORMAT, nv as String)
-                    Pref.Date.SHOW -> e.putBoolean(Pref.Date.SHOW, nv as Boolean)
-                    Pref.Date.FONT -> e.putString(Pref.Date.FONT, nv as String)
-                    Pref.Date.SIZE -> e.putInt(Pref.Date.SIZE, nv as Int)
-                    Pref.Date.COLOR -> e.putInt(Pref.Date.COLOR, nv as Int)
-                    Pref.Date.ALIGN -> e.putString(Pref.Date.ALIGN, nv as String)
-                    Pref.Date.FORMAT -> e.putString(Pref.Date.FORMAT, nv as String)
-                    Pref.Alarm.SHOW -> e.putBoolean(Pref.Alarm.SHOW, nv as Boolean)
-                    Pref.Alarm.FONT -> e.putString(Pref.Alarm.FONT, nv as String)
-                    Pref.Alarm.SIZE -> e.putInt(Pref.Alarm.SIZE, nv as Int)
-                    Pref.Alarm.COLOR -> e.putInt(Pref.Alarm.COLOR, nv as Int)
-                    Pref.Alarm.ALIGN -> e.putString(Pref.Alarm.ALIGN, nv as String)
-                    Pref.Alarm.FORMAT -> e.putString(Pref.Alarm.FORMAT, nv as String)
-                }
-
-                e.apply()
-                true
-            }
-    }
-
 }
