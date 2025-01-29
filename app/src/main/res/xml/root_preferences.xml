@@ -1,8 +1,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/layout_header">
-
+    <PreferenceCategory app:title="@string/general_header">
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/font_list"
+            app:entryValues="@array/font_list_values"
+            app:icon="@drawable/ic_font"
+            app:key="font"
+            app:title="@string/font_title"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/time_header">
         <SwitchPreferenceCompat
@@ -10,14 +17,6 @@
             app:icon="@drawable/ic_clock"
             app:key="time_show"
             app:title="@string/show_title" />
-        <ListPreference
-            app:defaultValue="default"
-            app:entries="@array/font_list"
-            app:entryValues="@array/font_list_values"
-            app:icon="@drawable/ic_font"
-            app:key="time_font"
-            app:title="@string/font_title"
-            app:useSimpleSummaryProvider="true" />
         <SeekBarPreference
             android:max="100"
             android:min="10"
@@ -57,14 +56,6 @@
             app:icon="@drawable/ic_calendar"
             app:key="date_show"
             app:title="@string/show_title" />
-        <ListPreference
-            app:defaultValue="default"
-            app:entries="@array/font_list"
-            app:entryValues="@array/font_list_values"
-            app:icon="@drawable/ic_font"
-            app:key="date_font"
-            app:title="@string/font_title"
-            app:useSimpleSummaryProvider="true" />
         <SeekBarPreference
             android:max="100"
             android:min="10"
@@ -104,14 +95,6 @@
             app:icon="@drawable/ic_alarm"
             app:key="alarm_show"
             app:title="@string/show_title" />
-        <ListPreference
-            app:defaultValue="default"
-            app:entries="@array/font_list"
-            app:entryValues="@array/font_list_values"
-            app:icon="@drawable/ic_font"
-            app:key="alarm_font"
-            app:title="@string/font_title"
-            app:useSimpleSummaryProvider="true" />
         <SeekBarPreference
             android:max="100"
             android:min="10"

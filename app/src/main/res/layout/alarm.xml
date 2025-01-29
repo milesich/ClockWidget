@@ -9,7 +9,7 @@
         android:id="@+id/alarmIcon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="4dp"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:scaleType="fitCenter"

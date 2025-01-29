@@ -15,9 +15,10 @@ import com.google.android.material.color.MaterialColors
 
 
 object Default {
+    const val FONT = "default"
+
     object Time {
         const val SHOW = true
-        const val FONT = "default"
         const val SIZE = 42
         const val ALIGN = Gravity.CENTER.toString()
         var COLOR = Color.WHITE
@@ -26,7 +27,6 @@ object Default {
 
     object Date {
         const val SHOW = true
-        const val FONT = "default"
         const val SIZE = 22
         const val ALIGN = Gravity.CENTER.toString()
         var COLOR = Color.WHITE
@@ -35,7 +35,6 @@ object Default {
 
     object Alarm {
         const val SHOW = true
-        const val FONT = "default"
         const val SIZE = 22
         const val ALIGN = Gravity.CENTER.toString()
         var COLOR = Color.WHITE
@@ -47,39 +46,25 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
     OnSharedPreferenceChangeListener {
 
     init {
-        if (!DateFormat.is24HourFormat(context)) {
-            Default.Time.FORMAT = "h:mm"
-            Default.Alarm.FORMAT = "E hh:mm a"
-        }
-
-        val color = MaterialColors.getColor(
-            context,
-            com.google.android.material.R.attr.colorOnSurface,
-            Color.WHITE
-        )
-
-        Default.Time.COLOR = color
-        Default.Date.COLOR = color
-        Default.Alarm.COLOR = color
+        updateDefaults(context)
     }
 
     companion object {
+        var font: String = Default.FONT
+
         var timeShow: Boolean = Default.Time.SHOW
-        var timeFont: String = Default.Time.FONT
         var timeSize: Int = Default.Time.SIZE
         var timeColor: Int = Default.Time.COLOR
         var timeAlign: String = Default.Time.ALIGN
         var timeFormat: String = Default.Time.FORMAT
 
         var dateShow: Boolean = Default.Date.SHOW
-        var dateFont: String = Default.Date.FONT
         var dateSize: Int = Default.Date.SIZE
         var dateColor: Int = Default.Date.COLOR
         var dateAlign: String = Default.Date.ALIGN
         var dateFormat: String = Default.Date.FORMAT
 
         var alarmShow: Boolean = Default.Alarm.SHOW
-        var alarmFont: String = Default.Alarm.FONT
         var alarmSize: Int = Default.Alarm.SIZE
         var alarmColor: Int = Default.Alarm.COLOR
         var alarmAlign: String = Default.Alarm.ALIGN
@@ -87,22 +72,21 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences, key: String?) {
+        font = sp.getString(Pref.FONT, Default.FONT)!!
+
         timeShow = sp.getBoolean(Pref.Time.SHOW, Default.Time.SHOW)
-        timeFont = sp.getString(Pref.Time.FONT, Default.Time.FONT)!!
         timeSize = sp.getInt(Pref.Time.SIZE, Default.Time.SIZE)
         timeColor = sp.getInt(Pref.Time.COLOR, Default.Time.COLOR)
         timeAlign = sp.getString(Pref.Time.ALIGN, Default.Time.ALIGN)!!
         timeFormat = sp.getString(Pref.Time.FORMAT, Default.Time.FORMAT)!!
 
         dateShow = sp.getBoolean(Pref.Date.SHOW, Default.Date.SHOW)
-        dateFont = sp.getString(Pref.Date.FONT, Default.Date.FONT)!!
         dateSize = sp.getInt(Pref.Date.SIZE, Default.Date.SIZE)
         dateColor = sp.getInt(Pref.Date.COLOR, Default.Date.COLOR)
         dateAlign = sp.getString(Pref.Date.ALIGN, Default.Date.ALIGN)!!
         dateFormat = sp.getString(Pref.Date.FORMAT, Default.Date.FORMAT)!!
 
         alarmShow = sp.getBoolean(Pref.Alarm.SHOW, Default.Alarm.SHOW)
-        alarmFont = sp.getString(Pref.Alarm.FONT, Default.Alarm.FONT)!!
         alarmSize = sp.getInt(Pref.Alarm.SIZE, Default.Alarm.SIZE)
         alarmColor = sp.getInt(Pref.Alarm.COLOR, Default.Alarm.COLOR)
         alarmAlign = sp.getString(Pref.Alarm.ALIGN, Default.Alarm.ALIGN)!!
@@ -163,7 +147,23 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
 
     private val layoutResource: Int
         get() {
-            return R.layout.widget_layout_default
+            return when (font) {
+//                "warnes" -> R.layout.widget_warnes
+//                "lato" -> R.layout.widget_lato
+//                "lato_light" -> R.layout.widget_lato_light
+//                "lato_thin" -> R.layout.widget_lato_thin
+//                "arizonia" -> R.layout.widget_arizonia
+//                "rubik_light" -> R.layout.widget_rubik_light
+//                "imprima" -> R.layout.widget_imprima
+//                "noto_sans" -> R.layout.widget_noto_sans
+//                "jolly_lodger" -> R.layout.widget_jolly_lodger
+//                "archivo_black" -> R.layout.widget_archivo_black
+//                "bungee_shade" -> R.layout.widget_bungee_shade
+//                "coda" -> R.layout.widget_coda
+//                "ubuntu_light" -> R.layout.widget_ubuntu_light
+//                "handlee" -> R.layout.widget_handlee
+                else -> R.layout.widget_default
+            }
         }
 
     private val nextAlarmText: String
@@ -172,4 +172,21 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
             val aci = am.nextAlarmClock ?: return ""
             return DateFormat.format(alarmFormat, aci.triggerTime) as String
         }
+}
+
+fun updateDefaults(context: Context) {
+    if (!DateFormat.is24HourFormat(context)) {
+        Default.Time.FORMAT = "h:mm"
+        Default.Alarm.FORMAT = "E hh:mm a"
+    }
+
+    val color = MaterialColors.getColor(
+        context,
+        com.google.android.material.R.attr.colorOnSurface,
+        Color.WHITE
+    )
+
+    Default.Time.COLOR = color
+    Default.Date.COLOR = color
+    Default.Alarm.COLOR = color
 }

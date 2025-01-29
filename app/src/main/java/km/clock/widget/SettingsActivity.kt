@@ -2,20 +2,26 @@ package km.clock.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.color.MaterialColors
 
 object Pref {
+    const val FONT = "font"
+
     object Time {
         const val SHOW = "time_show"
-        const val FONT = "time_font"
         const val SIZE = "time_size"
         const val COLOR = "time_color"
         const val ALIGN = "time_align"
@@ -24,7 +30,6 @@ object Pref {
 
     object Date {
         const val SHOW = "date_show"
-        const val FONT = "date_font"
         const val SIZE = "date_size"
         const val COLOR = "date_color"
         const val ALIGN = "date_align"
@@ -33,7 +38,6 @@ object Pref {
 
     object Alarm {
         const val SHOW = "alarm_show"
-        const val FONT = "alarm_font"
         const val SIZE = "alarm_size"
         const val COLOR = "alarm_color"
         const val ALIGN = "alarm_align"
@@ -41,7 +45,7 @@ object Pref {
     }
 }
 
-class SettingsActivity : AppCompatActivity(R.layout.settings_activity), WidgetUpdater {
+class SettingsActivity : AppCompatActivity(), WidgetUpdater {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private var preview: FrameLayout? = null
     private var widgetViewCreator: WidgetViewCreator? = null
@@ -52,6 +56,8 @@ class SettingsActivity : AppCompatActivity(R.layout.settings_activity), WidgetUp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DynamicColors.applyToActivityIfAvailable(this)
+        setContentView(R.layout.settings_activity)
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
@@ -71,7 +77,22 @@ class SettingsActivity : AppCompatActivity(R.layout.settings_activity), WidgetUp
             return
         }
 
+        val light = ColorDrawable(
+            MaterialColors.getColor(this, com.google.android.material.R.attr.colorOnSurface, Color.WHITE)
+        )
+
+        val dark = ColorDrawable(
+            MaterialColors.getColor(this, com.google.android.material.R.attr.colorSurface, Color.BLACK)
+        )
+
         preview = findViewById(R.id.preview)
+        preview?.setOnClickListener { v: View ->
+            if (v.background == null) {
+                v.background = light
+            } else {
+                v.background = if (v.background.hashCode() == light.hashCode()) dark else light
+            }
+        }
 
         if (savedInstanceState == null) {
             val bundle = bundleOf("appWidgetId" to appWidgetId)

@@ -1,8 +1,8 @@
 package km.clock.widget
 
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -20,6 +20,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+        updateDefaults(requireContext())
+
         val appWidgetId = requireArguments().getInt("appWidgetId")
         val sp = requireContext().getSharedPreferences(appWidgetId.toString(), MODE_PRIVATE)
         val listener = changeListener(appWidgetId)
@@ -33,21 +35,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val dd = Default.Date
         val da = Default.Alarm
 
+        findPreference<ListPreference>(Pref.FONT)?.apply {
+            onPreferenceChangeListener = listener
+            value = sp.getString(Pref.FONT, Default.FONT)
+        }
+
         mapOf(
             pt.SHOW to dt.SHOW, pd.SHOW to dd.SHOW, pa.SHOW to da.SHOW
         ).forEach { (k, v) ->
             findPreference<SwitchPreferenceCompat>(k)?.apply {
                 onPreferenceChangeListener = listener
                 isChecked = sp.getBoolean(k, v)
-            }
-        }
-
-        mapOf(
-            pt.FONT to dt.FONT, pd.FONT to dd.FONT, pa.FONT to da.FONT
-        ).forEach { (k, v) ->
-            findPreference<ListPreference>(k)?.apply {
-                onPreferenceChangeListener = listener
-                value = sp.getString(k, v)
             }
         }
 
@@ -95,20 +93,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Log.d(TAG, "${preference.key} = $newValue")
 
             when (preference.key) {
+                Pref.FONT -> e.putString(Pref.FONT, newValue as String)
                 Pref.Time.SHOW -> e.putBoolean(Pref.Time.SHOW, newValue as Boolean)
-                Pref.Time.FONT -> e.putString(Pref.Time.FONT, newValue as String)
                 Pref.Time.SIZE -> e.putInt(Pref.Time.SIZE, newValue as Int)
                 Pref.Time.COLOR -> e.putInt(Pref.Time.COLOR, newValue as Int)
                 Pref.Time.ALIGN -> e.putString(Pref.Time.ALIGN, newValue as String)
                 Pref.Time.FORMAT -> e.putString(Pref.Time.FORMAT, newValue as String)
                 Pref.Date.SHOW -> e.putBoolean(Pref.Date.SHOW, newValue as Boolean)
-                Pref.Date.FONT -> e.putString(Pref.Date.FONT, newValue as String)
                 Pref.Date.SIZE -> e.putInt(Pref.Date.SIZE, newValue as Int)
                 Pref.Date.COLOR -> e.putInt(Pref.Date.COLOR, newValue as Int)
                 Pref.Date.ALIGN -> e.putString(Pref.Date.ALIGN, newValue as String)
                 Pref.Date.FORMAT -> e.putString(Pref.Date.FORMAT, newValue as String)
                 Pref.Alarm.SHOW -> e.putBoolean(Pref.Alarm.SHOW, newValue as Boolean)
-                Pref.Alarm.FONT -> e.putString(Pref.Alarm.FONT, newValue as String)
                 Pref.Alarm.SIZE -> e.putInt(Pref.Alarm.SIZE, newValue as Int)
                 Pref.Alarm.COLOR -> e.putInt(Pref.Alarm.COLOR, newValue as Int)
                 Pref.Alarm.ALIGN -> e.putString(Pref.Alarm.ALIGN, newValue as String)

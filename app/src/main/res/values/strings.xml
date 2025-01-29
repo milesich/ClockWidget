@@ -4,7 +4,7 @@
     <string name="save_title">Save</string>
 
     <!-- Preference Titles -->
-    <string name="layout_header">Layout</string>
+    <string name="general_header">General</string>
     <string name="time_header">Time</string>
     <string name="date_header">Date</string>
     <string name="alarm_header">Alarm</string>
