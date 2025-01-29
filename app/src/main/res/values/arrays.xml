@@ -1,38 +1,38 @@
 <resources>
     <string-array name="font_list">
-        <item>System font</item>
-        <item>Warnes</item>
-        <item>Lato regular</item>
-        <item>Lato light</item>
-        <item>Lato thin</item>
-        <item>Arizonia</item>
-        <item>Rubik light</item>
-        <item>Imprima</item>
-        <item>Noto sans</item>
-        <item>Jolly lodger</item>
-        <item>Archivo black</item>
-        <item>Bungee shade</item>
-        <item>Coda</item>
-        <item>Ubuntu light</item>
-        <item>Handlee</item>
+        <item>Default</item>
+        <item>Sans Serif Thin</item>
+        <item>Sans Serif Light</item>
+        <item>Sans Serif</item>
+        <item>Sans Serif Medium</item>
+        <item>Sans Serif Black</item>
+        <item>Sans Serif Condensed Light</item>
+        <item>Sans Serif Condensed</item>
+        <item>Sans Serif Condensed Medium</item>
+        <item>Serif</item>
+        <item>Monospace</item>
+        <item>Serif Monospace</item>
+        <item>Casual</item>
+        <item>Cursive</item>
+        <item>Sans Serif Small Caps</item>
     </string-array>
 
     <string-array name="font_list_values">
         <item>default</item>
-        <item>warnes</item>
-        <item>lato</item>
-        <item>lato_light</item>
-        <item>lato_thin</item>
-        <item>arizonia</item>
-        <item>rubik_light</item>
-        <item>imprima</item>
-        <item>noto_sans</item>
-        <item>jolly_lodger</item>
-        <item>archivo_black</item>
-        <item>bungee_shade</item>
-        <item>coda</item>
-        <item>ubuntu_light</item>
-        <item>handlee</item>
+        <item>sans-serif-thin</item>
+        <item>sans-serif-light</item>
+        <item>sans-serif</item>
+        <item>sans-serif-medium</item>
+        <item>sans-serif-black</item>
+        <item>sans-serif-condensed-light</item>
+        <item>sans-serif-condensed</item>
+        <item>sans-serif-condensed-medium</item>
+        <item>serif</item>
+        <item>monospace</item>
+        <item>serif-monospace</item>
+        <item>casual</item>
+        <item>cursive</item>
+        <item>sans-serif-smallcaps</item>
     </string-array>
 
     <string-array name="text_align_keys">

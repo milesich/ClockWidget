@@ -5,7 +5,8 @@
 
     <TextClock
         android:id="@+id/timeText"
-        style="@style/TimeTextClock" />
+        style="@style/TimeTextClock"
+        android:fontFamily="sans-serif-black" />
 
     <LinearLayout
         android:id="@+id/dateAlarmView"
@@ -13,6 +14,7 @@
 
         <TextClock
             android:id="@+id/dateText"
+            android:fontFamily="sans-serif-black"
             style="@style/DateTextClock" />
 
         <LinearLayout
@@ -25,6 +27,7 @@
 
             <TextView
                 android:id="@+id/alarmText"
+                android:fontFamily="sans-serif-black"
                 style="@style/AlarmTextView" />
 
         </LinearLayout>

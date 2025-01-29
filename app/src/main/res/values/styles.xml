@@ -10,4 +10,62 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <style name="TimeTextClock">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:format12Hour">h:mm</item>
+        <item name="android:format24Hour">H:mm</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="DateTextClock">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:format12Hour">EEE, MMM d</item>
+        <item name="android:format24Hour">EEE, MMM d</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="AlarmImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:src">@drawable/ic_alarm_w</item>
+    </style>
+
+    <style name="AlarmTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:text">Fun 6:00</item>
+    </style>
+
+    <style name="WidgetLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginHorizontal">0dp</item>
+        <item name="android:layout_marginVertical">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="DateAlarmLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="AlarmLinearLayout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
 </resources>

@@ -98,25 +98,25 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
     fun createWidgetRemoteView(): RemoteViews {
         val views = RemoteViews(context.packageName, layoutResource)
 
-        views.setViewVisibility(R.id.time, View.GONE)
-        views.setViewVisibility(R.id.date, View.GONE)
+        views.setViewVisibility(R.id.timeText, View.GONE)
+        views.setViewVisibility(R.id.dateText, View.GONE)
         views.setViewVisibility(R.id.alarmView, View.GONE)
 
         if (timeShow) {
-            views.setViewVisibility(R.id.time, View.VISIBLE)
-            views.setCharSequence(R.id.time, "setFormat24Hour", timeFormat)
-            views.setCharSequence(R.id.time, "setFormat12Hour", timeFormat)
-            views.setTextViewTextSize(R.id.time, TypedValue.COMPLEX_UNIT_SP, timeSize.toFloat())
-            views.setTextColor(R.id.time, timeColor)
-            views.setInt(R.id.time, "setGravity", timeAlign.toInt())
+            views.setViewVisibility(R.id.timeText, View.VISIBLE)
+            views.setCharSequence(R.id.timeText, "setFormat24Hour", timeFormat)
+            views.setCharSequence(R.id.timeText, "setFormat12Hour", timeFormat)
+            views.setTextViewTextSize(R.id.timeText, TypedValue.COMPLEX_UNIT_SP, timeSize.toFloat())
+            views.setTextColor(R.id.timeText, timeColor)
+            views.setInt(R.id.timeText, "setGravity", timeAlign.toInt())
         }
 
         if (dateShow) {
-            views.setViewVisibility(R.id.date, View.VISIBLE)
-            views.setCharSequence(R.id.date, "setFormat24Hour", dateFormat)
-            views.setCharSequence(R.id.date, "setFormat12Hour", dateFormat)
-            views.setTextViewTextSize(R.id.date, TypedValue.COMPLEX_UNIT_SP, dateSize.toFloat())
-            views.setTextColor(R.id.date, dateColor)
+            views.setViewVisibility(R.id.dateText, View.VISIBLE)
+            views.setCharSequence(R.id.dateText, "setFormat24Hour", dateFormat)
+            views.setCharSequence(R.id.dateText, "setFormat12Hour", dateFormat)
+            views.setTextViewTextSize(R.id.dateText, TypedValue.COMPLEX_UNIT_SP, dateSize.toFloat())
+            views.setTextColor(R.id.dateText, dateColor)
             views.setInt(R.id.dateAlarmView, "setGravity", dateAlign.toInt())
         }
 
@@ -126,13 +126,13 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
                 val csl = ColorStateList.valueOf(alarmColor)
                 views.setViewVisibility(R.id.alarmView, View.VISIBLE)
                 views.setTextViewTextSize(
-                    R.id.alarm,
+                    R.id.alarmText,
                     TypedValue.COMPLEX_UNIT_SP,
                     alarmSize.toFloat()
                 )
-                views.setTextColor(R.id.alarm, alarmColor)
+                views.setTextColor(R.id.alarmText, alarmColor)
                 views.setColorStateList(R.id.alarmIcon, "setImageTintList", csl)
-                views.setTextViewText(R.id.alarm, alarmText)
+                views.setTextViewText(R.id.alarmText, alarmText)
                 views.setViewLayoutWidth(
                     R.id.alarmIcon,
                     alarmSize.toFloat(),
@@ -148,20 +148,20 @@ class WidgetViewCreator(private val context: Context, private val updater: Widge
     private val layoutResource: Int
         get() {
             return when (font) {
-//                "warnes" -> R.layout.widget_warnes
-//                "lato" -> R.layout.widget_lato
-//                "lato_light" -> R.layout.widget_lato_light
-//                "lato_thin" -> R.layout.widget_lato_thin
-//                "arizonia" -> R.layout.widget_arizonia
-//                "rubik_light" -> R.layout.widget_rubik_light
-//                "imprima" -> R.layout.widget_imprima
-//                "noto_sans" -> R.layout.widget_noto_sans
-//                "jolly_lodger" -> R.layout.widget_jolly_lodger
-//                "archivo_black" -> R.layout.widget_archivo_black
-//                "bungee_shade" -> R.layout.widget_bungee_shade
-//                "coda" -> R.layout.widget_coda
-//                "ubuntu_light" -> R.layout.widget_ubuntu_light
-//                "handlee" -> R.layout.widget_handlee
+                "sans-serif-thin" -> R.layout.widget_sst
+                "sans-serif-light" -> R.layout.widget_ssl
+                "sans-serif" -> R.layout.widget_ss
+                "sans-serif-medium" -> R.layout.widget_ssm
+                "sans-serif-black" -> R.layout.widget_ssb
+                "sans-serif-condensed-light" -> R.layout.widget_sscl
+                "sans-serif-condensed" -> R.layout.widget_ssc
+                "sans-serif-condensed-medium" -> R.layout.widget_sscm
+                "serif" -> R.layout.widget_serif
+                "monospace" -> R.layout.widget_monospace
+                "serif-monospace" -> R.layout.widget_sm
+                "casual" -> R.layout.widget_casual
+                "cursive" -> R.layout.widget_cursive
+                "sans-serif-smallcaps" -> R.layout.widget_sssc
                 else -> R.layout.widget_default
             }
         }
