@@ -19,6 +19,14 @@ class ClockWidget : AppWidgetProvider(), WidgetUpdater {
         val action = intent.action
         if (action != null && action == "android.app.action.NEXT_ALARM_CLOCK_CHANGED") {
             Log.d("ClockWidget", action)
+            // Update all widgets when alarm changes
+            if (context != null) {
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    android.content.ComponentName(context, ClockWidget::class.java)
+                )
+                onUpdate(context, appWidgetManager, appWidgetIds)
+            }
         }
     }
 
